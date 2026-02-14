@@ -9,23 +9,19 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     if ('data' in command && 'execute' in command) {
         commands.push(command.data.toJSON());
-    } else {
-        console.log(`[WARNING] The command at ${file} is missing a required "data" or "execute" property.`);
     }
 }
 
-const rest = new REST().setToken('MTQ2Njg3NjE0MzMzMTQ0Mjk1MQ.GeTWt_.cFJnMPLGnwxpQJwNRe8K9sro6RJwnPjF9hj1dI');
+// استخدام TOKEN من متغيرات البيئة
+const rest = new REST().setToken(process.env.TOKEN);
 
 (async () => {
     try {
         console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-        // The put method is used to fully refresh all commands in the guild with the current set
-        // Note: Using global application commands (Routes.applicationCommands) instead of guild commands for simplicity, 
-        // but they can take up to an hour to propagate. For instant updates during dev, guild commands are better.
-        // Given the quick setup, I will use applicationCommands (global).
+        // استبدل 'YOUR_CLIENT_ID' بمعرف البوت الخاص بك أو استخدم متغير بيئة
         await rest.put(
-            Routes.applicationCommands('1466876143331442951'),
+            Routes.applicationCommands(process.env.CLIENT_ID || '1466876143331442951'),
             { body: commands },
         );
 
