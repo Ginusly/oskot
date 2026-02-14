@@ -56,4 +56,5 @@ client.on('error', error => {
     console.error('The WebSocket encountered an error:', error);
 });
 
-client.login('MTQ2Njg3NjE0MzMzMTQ0Mjk1MQ.GeTWt_.cFJnMPLGnwxpQJwNRe8K9sro6RJwnPjF9hj1dI');
+
+client.login(process.env.TOKEN);
